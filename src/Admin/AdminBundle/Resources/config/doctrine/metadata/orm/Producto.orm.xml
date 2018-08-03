@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Producto" table="producto">
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="idTipoProd" type="integer" column="id_tipo_prod" nullable="false"/>
+    <field name="idModelo" type="integer" column="id_modelo" nullable="false"/>
+    <field name="fechaFab" type="datetime" column="fecha_fab" nullable="false"/>
+  </entity>
+</doctrine-mapping>

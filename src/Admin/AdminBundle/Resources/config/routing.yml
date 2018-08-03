@@ -1,0 +1,59 @@
+admin_homepage:
+    pattern:  /
+    defaults: { _controller: AdminBundle:Default:index }
+
+admin_modelos:
+    pattern:  /modelos/{id}/
+    defaults: { _controller: AdminBundle:Modelos:index }
+
+admin_modelos_listar:
+    pattern:  /listModels/{id}/
+    defaults: { _controller: AdminBundle:Modelos:listModelsType }
+
+admin_destinos:
+    pattern:  /destinos/{id}/
+    defaults: { _controller: AdminBundle:Destinos:index }
+
+admin_logout:
+    pattern:  /close
+    defaults: { _controller: AdminBundle:Login:logout }
+
+admin_login:
+    pattern:  /login
+    defaults: { _controller: AdminBundle:Login:index }
+
+admin_perfil:
+    pattern:  /perfil/{id}/
+    defaults: { _controller: AdminBundle:Login:perfil }
+
+admin_usuario:
+    pattern:  /usuario/{id}/
+    defaults: { _controller: AdminBundle:Usuario:index }
+
+admin_tipo_producto:
+    pattern:  /tipoproducto/{id}/
+    defaults: { _controller: AdminBundle:TipoProducto:index }
+
+admin_producto:
+    pattern:  /producto/{id}/
+    defaults: { _controller: AdminBundle:Producto:index }
+
+admin_carga_producto:
+    pattern:  /cargaProducto/
+    defaults: { _controller: AdminBundle:Producto:listCargasProd }
+
+admin_producto_code:
+    pattern:  /prodList/{desde}/{hasta}/{idlog}/
+    defaults: { _controller: AdminBundle:Producto:listProducts }
+
+admin_buscar_producto:
+    pattern:  /buscarProducto/
+    defaults: { _controller: AdminBundle:Producto:buscarProducto }
+
+admin_plantillas:
+    pattern:  /plantilla/{idlog}/
+    defaults: { _controller: AdminBundle:Plantilla:plantillaBasica }
+
+code_bar:
+    pattern:  /codebar/{code}/{type}/{size}/{print}/
+    defaults: { _controller: AdminBundle:Code:index }

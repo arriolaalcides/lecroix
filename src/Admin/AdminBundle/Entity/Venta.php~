@@ -1,0 +1,60 @@
+<?php
+
+namespace Admin\AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Venta
+ *
+ * @ORM\Table(name="venta")
+ * @ORM\Entity
+ */
+class Venta
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_destino", type="integer", nullable=false)
+     */
+    private $idDestino;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_usu", type="integer", nullable=false)
+     */
+    private $idUsu;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="precio", type="decimal", nullable=false)
+     */
+    private $precio;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="tipo_venta", type="integer", nullable=false)
+     */
+    private $tipoVenta;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_venta", type="datetime", nullable=false)
+     */
+    private $fechaVenta;
+
+
+}

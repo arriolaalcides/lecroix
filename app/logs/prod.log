@@ -1,0 +1,21 @@
+[2017-02-20 05:15:44] request.INFO: Matched route "admin_admin_homepage" (parameters: "_controller": "Admin\AdminBundle\Controller\DefaultController::indexAction", "_route": "admin_admin_homepage") [] []
+[2017-02-20 05:15:44] request.CRITICAL: LogicException: The controller must return a response (null given). Did you forget to add a return statement somewhere in your controller? (uncaught exception) at C:\wamp\www\Pagos\Alcides\lecroixGit\repo4\app\bootstrap.php.cache line 1444 [] []
+[2018-05-04 02:00:04] request.ERROR: Symfony\Component\HttpKernel\Exception\NotFoundHttpException: No route found for "GET /usuario/admin/img/favicon.ico" (uncaught exception) at D:\wamp\www\prueba\lecroixGit\proyecto\app\cache\prod\classes.php line 5194 [] []
+[2018-05-04 02:00:09] request.ERROR: Symfony\Component\HttpKernel\Exception\NotFoundHttpException: No route found for "GET /destinos/admin/img/favicon.ico" (uncaught exception) at D:\wamp\www\prueba\lecroixGit\proyecto\app\cache\prod\classes.php line 5194 [] []
+[2018-05-04 02:00:24] request.ERROR: Symfony\Component\HttpKernel\Exception\NotFoundHttpException: No route found for "GET /producto/admin/img/favicon.ico" (uncaught exception) at D:\wamp\www\prueba\lecroixGit\proyecto\app\cache\prod\classes.php line 5194 [] []
+[2018-05-04 02:00:29] request.ERROR: Symfony\Component\HttpKernel\Exception\NotFoundHttpException: No route found for "GET /tipoproducto/admin/img/favicon.ico" (uncaught exception) at D:\wamp\www\prueba\lecroixGit\proyecto\app\cache\prod\classes.php line 5194 [] []
+[2018-05-04 02:00:34] request.ERROR: Symfony\Component\HttpKernel\Exception\NotFoundHttpException: No route found for "GET /modelos/admin/img/favicon.ico" (uncaught exception) at D:\wamp\www\prueba\lecroixGit\proyecto\app\cache\prod\classes.php line 5194 [] []
+[2018-05-04 02:00:37] request.INFO: Matched route "admin_carga_producto" (parameters: "_controller": "Admin\AdminBundle\Controller\ProductoController::listCargasProdAction", "_route": "admin_carga_producto") [] []
+[2018-05-04 02:00:38] request.CRITICAL: Doctrine\DBAL\DBALException: An exception occurred while executing 'select   id,idusuario,fecha,total,datos,descrip
+                  from     log_productos
+                  where    idusuario=2
+                  order by id desc;':
+
+SQLSTATE[42S22]: Column not found: 1054 Champ 'total' inconnu dans field list (uncaught exception) at D:\wamp\www\prueba\lecroixGit\proyecto\vendor\doctrine\dbal\lib\Doctrine\DBAL\DBALException.php line 47 [] []
+[2018-05-04 02:00:46] request.INFO: Matched route "admin_carga_producto" (parameters: "_controller": "Admin\AdminBundle\Controller\ProductoController::listCargasProdAction", "_route": "admin_carga_producto") [] []
+[2018-05-04 02:00:47] request.CRITICAL: Doctrine\DBAL\DBALException: An exception occurred while executing 'select   id,idusuario,fecha,total,datos,descrip
+                  from     log_productos
+                  where    idusuario=2
+                  order by id desc;':
+
+SQLSTATE[42S22]: Column not found: 1054 Champ 'total' inconnu dans field list (uncaught exception) at D:\wamp\www\prueba\lecroixGit\proyecto\vendor\doctrine\dbal\lib\Doctrine\DBAL\DBALException.php line 47 [] []

@@ -1,0 +1,60 @@
+<?php
+
+namespace Admin\AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Lote
+ *
+ * @ORM\Table(name="lote")
+ * @ORM\Entity
+ */
+class Lote
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="cantidad", type="integer", nullable=false)
+     */
+    private $cantidad;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_destino", type="integer", nullable=false)
+     */
+    private $idDestino;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_usu_alta", type="integer", nullable=false)
+     */
+    private $idUsuAlta;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cod_barra", type="string", length=50, nullable=false)
+     */
+    private $codBarra;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_reg", type="datetime", nullable=false)
+     */
+    private $fechaReg;
+
+
+}

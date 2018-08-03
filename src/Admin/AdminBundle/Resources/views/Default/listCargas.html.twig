@@ -1,0 +1,65 @@
+{% extends "AdminBundle:Default:layout.html.twig" %}
+{% block content %}
+<div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">                            
+                    <div class="header">
+                        <p class="category">
+                            <!--Ruta-->
+                            <div style="border-bottom:1px dotted gray;padding-bottom:10px;">
+                                <a href="{{ path('admin_homepage') }}" style="color:#9368E9;">
+                                    <b>Inicio</b>
+                                </a>
+                                <b>/</b>
+                                <a href="{{path('admin_producto',{'id':'list'})}}" style="color:#9368E9;">
+                                    <b>Productos</b>
+                                </a>
+                            </div>
+                            <!--Titulo-->
+                            <h3 class="title" style="margin-top:10px;">
+                                <i class="pe-7s-note2"></i>
+                                Productos cargados por <b style="color:#9368E9;">{{user.nick|capitalize}}</b>
+                            </h3>                                                
+                            <!--Tabla-->
+                            <div style="margin-top:10px;font-size:17px;padding:20px;">
+                                <table class="table table-hover">
+                                    <thead>                                        
+                                        <tr>
+                                            <th>Fecha</th>
+                                            <th>Total</th>                                            
+                                            <th>Carga</th>
+                                            <th>Plantilla codigos</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for prod in productos %}
+                                        <tr>
+                                            <td>{{prod.fecha}}</td>
+                                            <td>{{prod.total}} Artículos</td>                                            
+                                            <th style="font-weight: normal;">
+                                                {% if prod.descrip!='' %}
+                                                    {{prod.descrip}}
+                                                {% else %}
+                                                    Sin detalle
+                                                {% endif %}                                                
+                                            </th>
+                                            <th>
+                                                <a href="{{path('admin_plantillas',{'idlog':prod.id})}}" target="_blank">                                                
+                                                    <button type="button" class="btn btn-warning btn-fill pull-left">
+                                                        Ver plantilla A4&nbsp;<i class="pe-7s-keypad"></i>
+                                                    </button>
+                                                </a>
+                                            </th>
+                                        </tr>
+                                        {% endfor %}                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+{% endblock %}

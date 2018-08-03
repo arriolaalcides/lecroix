@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Venta" table="venta">
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="idDestino" type="integer" column="id_destino" nullable="false"/>
+    <field name="idUsu" type="integer" column="id_usu" nullable="false"/>
+    <field name="precio" type="decimal" column="precio" nullable="false"/>
+    <field name="tipoVenta" type="integer" column="tipo_venta" nullable="false"/>
+    <field name="fechaVenta" type="datetime" column="fecha_venta" nullable="false"/>
+  </entity>
+</doctrine-mapping>

@@ -1,0 +1,39 @@
+<?php
+
+namespace Admin\AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * TipoVenta
+ *
+ * @ORM\Table(name="tipo_venta")
+ * @ORM\Entity
+ */
+class TipoVenta
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="descripcion", type="string", length=50, nullable=false)
+     */
+    private $descripcion;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="interes", type="decimal", nullable=false)
+     */
+    private $interes;
+
+
+}

@@ -1,0 +1,15 @@
+<html>
+	<body>
+		<table>
+		  {% for prod in productos %}
+		  <tr>
+		  	{% for linea in prod %}
+		  	<td>
+				<img src="http://127.0.0.1/pagos/Alcides/lecroixGit/repo5/web/app_dev.php/codebar/{{linea.codebar}}/code128/50/s/">
+			</td>
+		  	{% endfor %}
+		  </tr>
+		  {% endfor %}
+		</table>
+	</body>
+</html>

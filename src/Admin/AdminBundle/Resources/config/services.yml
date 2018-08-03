@@ -1,0 +1,16 @@
+services:
+    login.service:
+        class: Admin\AdminBundle\Servicios\LoginService
+        arguments:
+            entityManager: "@doctrine.orm.entity_manager"
+            container: "@service_container"
+    codebar.service:
+        class: Admin\AdminBundle\Servicios\CodeBarService
+        arguments:
+            entityManager: "@doctrine.orm.entity_manager"
+            container: "@service_container"
+    productos.service:
+        class: Admin\AdminBundle\Servicios\ProductosService
+        arguments:
+            entityManager: "@doctrine.orm.entity_manager"
+            container: "@service_container"            

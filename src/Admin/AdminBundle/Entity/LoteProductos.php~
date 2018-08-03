@@ -1,0 +1,39 @@
+<?php
+
+namespace Admin\AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * LoteProductos
+ *
+ * @ORM\Table(name="lote_productos")
+ * @ORM\Entity
+ */
+class LoteProductos
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_lote", type="integer", nullable=false)
+     */
+    private $idLote;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_prod", type="integer", nullable=false)
+     */
+    private $idProd;
+
+
+}

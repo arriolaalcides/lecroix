@@ -1,0 +1,129 @@
+{% extends "AdminBundle:Default:layout.html.twig" %}
+{% block content %}
+<script language="javascript">
+    function borrarMsg(url)
+    {
+        var r = confirm("¿Desea borrar este elemento?");
+        
+        if (r == true)
+            window.location=url;
+    }
+</script>
+<div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">                            
+                    <div class="header">
+                        <p class="category">
+                            <!--Ruta-->
+                            <div style="border-bottom:1px dotted gray;padding-bottom:10px;">
+                                <a href="{{ path('admin_homepage') }}" style="color:#9368E9;">
+                                    <b>Inicio</b>
+                                </a>
+                                <b>/</b>
+                                <a href="{{path('admin_tipo_producto',{'id':'list'})}}" style="color:#9368E9;">
+                                    <b>Tipos de producto</b>
+                                </a>
+                            </div>
+                            <!--Titulo-->
+                            <h3 class="title" style="margin-top:10px;">
+                                <i class="pe-7s-box1"></i>
+                                Editor de tipos de producto
+                            </h3>
+                            <!--Segun el tipo de accion-->
+                            {% if ((mode=='add') or (mode=='edit')) %}
+                                <div class="row" style="margin-top:15px;">
+                                        <div class="col-md-4" style="margin-bottom:15px;">
+                                            <div class="form-group">
+                                                {% if (mode=='add')  %}
+                                                <form method="post" action="{{path('admin_tipo_producto',{'id':'add'})}}">
+                                                {% elseif (mode=='edit') %}
+                                                <form method="post" action="{{path('admin_tipo_producto',{'id':id})}}">
+                                                {% endif %}
+                                                    <label style="font-size:15px;">
+                                                        <b>Nombre del nuevo tipo de producto:</b>
+                                                    </label>
+                                                    <input type="text" class="form-control" placeholder="Escriba el nombre" name="txt_descripcion"  
+                                                        {% if tipoproducto %} value="{{tipoproducto.descripcion}}" {% endif %}>
+                                                    <br>
+                                                    <!--Boton de volver-->
+                                                    <a href="{{ path('admin_tipo_producto',{'id':'list'}) }}" style="color:#9368E9;">
+                                                        <button type="button" class="btn btn-danger btn-fill pull-left" style="margin-right:10px;">
+                                                            <i class="pe-7s-close-circle"></i>&nbsp;Cancelar
+                                                        </button>
+                                                    </a>
+                                                    <!--Boton de Enviar-->                                                       
+                                                    <button type="submit" class="btn btn-success btn-fill pull-left">
+                                                        {% if tipoproducto %} 
+                                                                   Modificar &rarr;
+                                                        {% else %}
+                                                                   Agregar &rarr;
+                                                        {% endif %}
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <br><br>
+                                </div>
+                            {% endif %}                                                      
+                            <!--LISTAR-->
+                            {% if (mode=='list') %}
+                                <!--Notificaciones-->
+                                <div>
+                                    {% if stat is defined %}
+                                        {% if stat=='ok' %}
+                                        <div class="alert alert-success" style="margin-top:10px;margin-bottom:10px;">
+                                            <span>Operación realizada con <b>Exito!</b></span>
+                                        </div>                                            
+                                        {% endif %}
+                                        {% if stat=='error' %}
+                                        <div class="alert alert-danger" style="margin-top:10px;margin-bottom:10px;">
+                                            <span>Hubo un error al realizar la operación</span>
+                                        </div>                                            
+                                        {% endif %}                                        
+                                    {% endif %}
+                                </div>                            
+                                <!--Barra de acciones-->
+                                <div>
+                                    <a href="{{path('admin_tipo_producto',{'id':'add'})}}">
+                                        <button type="submit" class="btn btn-success btn-fill pull-right">
+                                            Agregar Tipo de producto&nbsp;<i class="pe-7s-plus"></i>
+                                        </button>
+                                    </a>
+                                </div><br>
+                                <!--Tabla-->
+                                <div style="margin-top:10px;font-size:17px;padding:20px;">
+                                    <table class="table table-hover">
+                                        <thead>                                        
+                                            <tr>
+                                                <th>Descripción</th>                                                
+                                                <th colspan="2">Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for dest in tipoproducto %}
+                                            <tr>                                                
+                                                <td>{{dest.descripcion}}</td>                                                
+                                                <th>
+                                                    <a href="{{path('admin_tipo_producto',{'id':dest.id})}}" title="Haga click para editar el usuario">
+                                                        <i class="pe-7s-pen"></i>&nbsp;Editar
+                                                    </a>
+                                                </th>
+                                                <th>
+                                                    <a href="javascript:borrarMsg('{{path('admin_tipo_producto',{'id':'D'~dest.id})}}');" title="Haga click para borrar el usuario" style="color:Red;">
+                                                        <i class="pe-7s-close-circle"></i>&nbsp;Borrar
+                                                    </a>
+                                                </th>
+                                            </tr>
+                                            {% endfor %}                                        
+                                        </tbody>
+                                    </table>
+                                </div>
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+{% endblock %}

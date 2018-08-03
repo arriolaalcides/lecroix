@@ -1,0 +1,48 @@
+<div class="sidebar" data-color="purple" data-image="{{ asset('bundles/admin/imgs/jeans.jpg')}}">
+    <div class="sidebar-wrapper">
+        <div class="logo">
+            <a href="http://www.creative-tim.com" class="simple-text">
+                STOCK
+            </a>
+        </div>        
+        <ul class="nav">
+            {% if app.session.get('sessionUser').tipoUsu=="1" %}
+            <li {% if app.request.attributes.get('_route')=='admin_usuario' %} class="active" {% endif %}>
+                <a href="{{path('admin_usuario',{'id':'list'})}}">
+                    <i class="pe-7s-angle-right"></i><p>ABM Usuarios</p>
+                </a>
+            </li>
+            <li {% if app.request.attributes.get('_route')=='admin_destinos' %} class="active" {% endif %}>
+                <a href="{{path('admin_destinos',{'id':'list'})}}">
+                    <i class="pe-7s-angle-right"></i><p>ABM Destinos</p>
+                </a>
+            </li>
+            <li {% if app.request.attributes.get('_route')=='admin_producto' %} class="active" {% endif %}>
+                <a href="{{path('admin_producto',{'id':'list'})}}">
+                    <i class="pe-7s-angle-right"></i><p>ABM Productos</p>
+                </a>
+            </li>
+            <li {% if app.request.attributes.get('_route')=='admin_tipo_producto' %} class="active" {% endif %}>
+                <a href="{{path('admin_tipo_producto',{'id':'list'})}}">
+                    <i class="pe-7s-angle-right"></i><p>ABM Tipo Productos</p>
+                </a>
+            </li>
+            <li {% if app.request.attributes.get('_route')=='admin_modelos' %} class="active" {% endif %}>
+                <a href="{{path('admin_modelos',{'id':'list'})}}">
+                    <i class="pe-7s-angle-right"></i><p>ABM Modelos</p>
+                </a>
+            </li>
+            <li {% if app.request.attributes.get('_route')=='admin_carga_producto' %} class="active" {% endif %}>
+                <a href="{{path('admin_carga_producto')}}">
+                    <i class="pe-7s-angle-right"></i><p>Carga Productos</p>
+                </a>
+            </li>            
+            <li>
+                <a href="">
+                    <p>ABM Lotes</p>
+                </a>
+            </li>            
+            {% endif %}
+        </ul>
+    </div>
+</div>

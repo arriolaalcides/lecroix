@@ -1,0 +1,50 @@
+{% extends "AdminBundle:Default:layout.html.twig" %}
+{% block content %}
+    {% if user==null %}
+    <div class="alert alert-danger" role="alert">
+        Usuario no encontrado
+    </div>
+    {% else %}
+<div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">                            
+                            <div class="header">
+                                <p class="category">
+                                    <!--Ruta-->
+                                    <div style="border-bottom:1px dotted gray;padding-bottom:10px;">
+                                        <a href="{{ path('admin_homepage') }}" style="color:#9368E9;">
+                                            <b>Inicio</b>
+                                        </a>
+                                        <b>/</b>
+                                        <a href="{{path('admin_perfil', {'id': app.session.get('sessionUser').id})}}" style="color:#9368E9;">
+                                            <b>Perfil</b> - <b>{{app.session.get('sessionUser').nick|capitalize}}</b>
+                                        </a>
+                                    </div>
+                                    <!--Titulo-->
+                                    <h3 class="title" style="margin-top:10px;">
+                                        <i class="pe-7s-user"></i>
+                                        {{user.nick|capitalize}}
+                                    </h3>
+                                    <div style="margin-top:10px;font-size:17px;">
+                                        <ul>
+                                            <li>Nombre: <b>{{user.nombre|capitalize}}</b></li>
+                                            <li>Apellido: <b>{{user.apellido|capitalize}}</b></li>
+                                            <li>Destino: {{user.destino|capitalize}}</li>
+                                            <li>Rol: {{user.tipo_usu_desc}}</li>
+                                        </ul>
+                                        <br>                                        
+                                    </div>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>    <!--
+        {user.id}<br>
+        {user.nick}<br>
+        {user.nombre}<br>
+        {user.apellido}<br>
+    -->
+    {% endif %}
+{% endblock %}

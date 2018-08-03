@@ -1,0 +1,281 @@
+{% extends "AdminBundle:Default:layout.html.twig" %}
+{% block content %}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script language="javascript">
+    
+    //Mensaje cuando se quire borrar.
+    function borrarMsg(url)
+    {
+        var r = confirm("¿Desea borrar este elemento?");
+        
+        if (r == true)
+            window.location=url;
+    }
+
+    //Valida que todso los campos esten completos.
+    function validForm()
+    {
+        var fecha  = $("#txt_fecha").val();
+        var modelo = $("#txt_modelo").val();
+        var tipo   = $("#txt_tipoprod").val();
+        var tipo   = $("#txt_tipoprod").val();
+        var origen = $("#txt_origen").val();
+
+        //Valido campos basicos.
+        return ((fecha!='')&&(modelo!='-1')&&(tipo!='-1')&&(origen!='-1'));
+    }
+
+    //Traer el listado de modelos de un tipo de datos.
+    function loadModelsFromType(id)
+    {
+        //armo la url.
+        var url = "{{url('admin_modelos_listar',{'id':''})}}";
+            url = url.substring(0, url.length-2)+'/'+id+'/';
+
+        $.getJSON(url, function( json )
+        {
+            //Si hay datos cargo el array.
+            if (json!=null)
+            {
+                if (json.length>0)
+                {
+                    var html = "<option id='-1'>--Seleccione--</option>";
+
+                    json.forEach((obj)=>{
+                        html = html + "<option id='"+obj.id+"'>"+obj.descripcion+"</option>";
+                    });                
+
+                    $("#txt_modelo").html(html);
+                }
+                else
+                {
+                    var html = "<option id='-1'>--Seleccione--</option>";                    
+                    $("#txt_modelo").html(html);
+                }
+            }
+            console.log(json);
+        });
+    }
+
+    $(document).ready(function()
+    {
+        //Cuando se hace click en el boton de enviar.
+        $("#btn_send").click(()=>{
+            if (validForm())
+                $("#form1").submit();
+            else
+                alert("Faltan completar campos!");
+        });
+
+        $("#txt_tipoprod").change(function()
+        {
+            loadModelsFromType($(this).val());
+        });
+
+        //Seteo controles.        
+        $("#txt_fecha").datepicker();
+        $("#txt_fecha").datepicker( "option", "dateFormat", "dd/mm/yy" );
+        $("#txt_fecha").datepicker( "setDate", new Date());
+    });
+
+</script>
+<div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">                            
+                    <div class="header">
+                        <p class="category">
+                            <!--Ruta-->
+                            <div style="border-bottom:1px dotted gray;padding-bottom:10px;">
+                                <a href="{{ path('admin_homepage') }}" style="color:#9368E9;">
+                                    <b>Inicio</b>
+                                </a>
+                                <b>/</b>
+                                <a href="{{path('admin_producto',{'id':'list'})}}" style="color:#9368E9;">
+                                    <b>Productos</b>
+                                </a>
+                            </div>
+                            <!--Titulo-->
+                            <h3 class="title" style="margin-top:10px;">
+                                <i class="pe-7s-shopbag"></i>
+                                Editor de productos
+                            </h3>
+                            <!--Segun el tipo de accion-->
+                            {% if ((mode=='add') or (mode=='edit')) %}
+                                <div class="row" style="margin-top:15px;">
+                                        <div class="col-md-4" style="margin-bottom:15px;">
+                                            <div class="form-group">
+                                                {% if (mode=='add')  %}
+                                                <form method="post" action="{{path('admin_producto',{'id':'add'})}}" id="form1">
+                                                {% elseif (mode=='edit') %}
+                                                <form method="post" action="{{path('admin_producto',{'id':id})}}" id="form1">
+                                                {% endif %}                                                    
+                                                    <label style="font-size:15px;">
+                                                        <b>Seleccione el tipo de producto:</b>
+                                                    </label>
+                                                    <select name="txt_tipoProd" class="form-control" id="txt_tipoprod"  required="true">
+                                                            <option value="-1"> - Seleccione -</option>
+                                                        {% for tu in tipoProducto %}
+                                                            {% if productos and tu.id==productos.idTipoProd %} 
+                                                                    <option value="{{tu.id}}" selected>{{tu.descripcion}}</option>
+                                                            {% else %}
+                                                                    <option value="{{tu.id}}">{{tu.descripcion}}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </select>
+                                                    <br>
+                                                    <label style="font-size:15px;">
+                                                        <b>Origén del producto:</b>
+                                                    </label>
+                                                    <br>                                                    
+                                                    <select name="txt_origen" class="form-control" id="txt_origen">
+                                                        <option value="-1"> - Seleccione -</option>
+                                                        {% for destino in destinos %}
+                                                            {% if productos!=null %}
+                                                                {% if destino.id == productos.destino %}
+                                                                    <option value="{{destino.id}}" selected>{{destino.descripcion}}</option>
+                                                                {% else %}
+                                                                    <option value="{{destino.id}}">{{destino.descripcion}}</option>
+                                                                {% endif %}                                                            
+                                                            {% else %}
+                                                                <option value="{{destino.id}}">{{destino.descripcion}}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </select>                                                    
+                                                    <br>                                               
+                                                    <label style="font-size:15px;">
+                                                        <b>Seleccione el modelo:</b>
+                                                    </label>
+                                                    <select name="txt_modelo" class="form-control" id="txt_modelo"  required="true">
+                                                        <option value="-1"> - Seleccione -</option>
+                                                        {% for de in modelos %}
+                                                            {% if productos and productos.idModelo==de.id %} 
+                                                                    <option value="{{de.id}}" selected>{{de.descripcion}}</option>
+                                                            {% else %}
+                                                                    <option value="{{de.id}}">{{de.descripcion}}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </select>
+                                                    <br>
+                                                    <label style="font-size:15px;">
+                                                        <b>Fecha de fabricación:</b>
+                                                    </label>
+                                                    <input type="text" class="form-control" placeholder="Escriba la fecha" id="txt_fecha" name="txt_fecha"
+                                                    {% if productos %} value="{{ productos.fechaFab|date('Y-m-d H:m:s') }}" {% else %} value="{{"now"|date("d/m/Y")}}" {% endif %} required="true">
+                                                    <br>
+                                                    <!-- Solo modo Add-->
+                                                    {% if (mode=='add') %}
+                                                    <div style="border:1px dotted gray;padding:5px;">
+                                                        <label style="font-size:15px;">
+                                                            <b>Cantidad a crear:</b>
+                                                        </label><br>
+                                                        <span>Se debe ingresar el número de productos que se desean registrar con esta mismas caracteristicas.</span>
+                                                        <input type="number" class="form-control" name="txt_cantidad" value="1" min="1" max="999" id="txt_cantidad"  required="true">
+                                                    </div>
+                                                    <br>
+                                                    {% endif %}
+                                                    <!--Boton de volver-->
+                                                    <a href="{{ path('admin_producto',{'id':'list'}) }}" style="color:#9368E9;">
+                                                        <button type="button" class="btn btn-danger btn-fill pull-left" style="margin-right:10px;">
+                                                            <i class="pe-7s-close-circle"></i>&nbsp;Cancelar
+                                                        </button>
+                                                    </a>
+                                                    <!--Boton de Enviar-->                                                     
+                                                    <button type="button" class="btn btn-success btn-fill pull-left" id="btn_send">
+                                                        {% if productos %} 
+                                                                   Modificar &rarr;
+                                                        {% else %}
+                                                                   Agregar &rarr;
+                                                        {% endif %}
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <br><br>
+                                </div>
+                            {% endif %}                                                      
+                            <!--LISTAR-->
+                            {% if (mode=='list') %}
+                                <!--Notificaciones-->
+                                <div>
+                                    {% if stat is defined %}
+                                        {% if stat=='ok' %}
+                                        <div class="alert alert-success" style="margin-top:10px;margin-bottom:10px;">
+                                            <span>Operación realizada con <b>Exito!</b></span>
+                                        </div>                                            
+                                        {% endif %}
+                                        {% if stat=='error' %}
+                                        <div class="alert alert-danger" style="margin-top:10px;margin-bottom:10px;">
+                                            <span>Hubo un error al realizar la operación</span>
+                                        </div>                                            
+                                        {% endif %}                                        
+                                    {% endif %}
+                                </div>                            
+                                <!--Barra de acciones-->
+                                <div>
+                                    <!--Boton de agregar-->
+                                    <a href="{{path('admin_producto',{'id':'add'})}}">
+                                        <button type="button" class="btn btn-success btn-fill pull-right">
+                                            Agregar Productos&nbsp;<i class="pe-7s-plus"></i>
+                                        </button>
+                                    </a>
+                                    <!--Editar tipos de productos-->
+                                    <a href="{{path('admin_tipo_producto',{'id':'list'})}}">
+                                        <button type="button" class="btn btn-info btn-fill pull-right" style="margin-right:10px;">
+                                            Tipos de productos&nbsp;<i class="pe-7s-box1"></i>
+                                        </button>
+                                    </a>
+                                    <!--Editar Modelos-->
+                                    <a href="{{path('admin_modelos',{'id':'list'})}}">
+                                        <button type="button" class="btn btn-info btn-fill pull-right" style="margin-right:10px;">
+                                            Modelos de productos&nbsp;<i class="pe-7s-network"></i>
+                                        </button>
+                                    </a>                                    
+                                </div><br>
+                                <!--Tabla-->
+                                <div style="margin-top:10px;font-size:17px;padding:20px;">
+                                    <div style="color:#9368E9;">
+                                       <i class="pe-7s-angle-right-circle"></i>
+                                       &nbsp;Ultimos 50 productos cargados:
+                                    </div>
+                                    <table class="table table-hover">
+                                        <thead>                                        
+                                            <tr>
+                                                <th>Origén</th>                                                
+                                                <th>Tipo de producto</th>
+                                                <th>Modelo</th>
+                                                <th>Fecha de fabricación</th>
+                                                <th colspan="2">Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for dest in productos %}
+                                            <tr>
+                                                <td>{{dest.destino|capitalize}}</td>                                                
+                                                <td>{{dest.descripcion|capitalize}}</td>
+                                                <td>{{dest.modelo|capitalize}}</td>
+                                                <td>{{dest.fecha_fab}}</td>                                                 
+                                                <th>
+                                                    <a href="{{path('admin_producto',{'id':dest.id})}}" title="Haga click para editar el usuario">
+                                                        <i class="pe-7s-pen"></i>&nbsp;Editar
+                                                    </a>
+                                                </th>
+                                                <th>
+                                                    <a href="javascript:borrarMsg('{{path('admin_producto',{'id':'D'~dest.id})}}');" title="Haga click para borrar el usuario" style="color:Red;">
+                                                        <i class="pe-7s-close-circle"></i>&nbsp;Borrar
+                                                    </a>
+                                                </th>
+                                            </tr>
+                                            {% endfor %}                                        
+                                        </tbody>
+                                    </table>
+                                </div>
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+{% endblock %}

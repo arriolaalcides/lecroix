@@ -1,0 +1,17 @@
+{% extends "AdminBundle:Default:layout.html.twig" %}
+{% block content %}
+    {% if id==null %}
+    <div class="alert alert-danger" role="alert">
+        Usuario no {{mensaje}}.
+    </div>    
+    {% else %}        
+    <div class="container-fluid">
+        <div class="content">
+            Usuario {{mensaje}}.
+            <a href="{{ path('admin_usuario_listado') }}" class="btn btn-info btn-fill pull-right" style="background:#9368E9;!important;border:0px solid #9368E9!important;">
+                Volver&nbsp;&nbsp;&rarr;
+            </a>
+        </div>
+    </div>    
+    {% endif %}
+{% endblock %}

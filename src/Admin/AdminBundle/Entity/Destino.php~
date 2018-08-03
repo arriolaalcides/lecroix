@@ -1,0 +1,39 @@
+<?php
+
+namespace Admin\AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Destino
+ *
+ * @ORM\Table(name="destino")
+ * @ORM\Entity
+ */
+class Destino
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="descripcion", type="string", length=50, nullable=false)
+     */
+    private $descripcion;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_usu_encargado", type="integer", nullable=false)
+     */
+    private $idUsuEncargado;
+
+
+}

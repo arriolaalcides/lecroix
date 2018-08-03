@@ -1,0 +1,189 @@
+{% extends "AdminBundle:Default:layout.html.twig" %}
+{% block content %}
+<script language="javascript">
+    function borrarMsg(url)
+    {
+        var r = confirm("¿Desea borrar este elemento?");
+        
+        if (r == true)
+            window.location=url;
+    }
+</script>
+<div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">                            
+                    <div class="header">
+                        <p class="category">
+                            <!--Ruta-->
+                            <div style="border-bottom:1px dotted gray;padding-bottom:10px;">
+                                <a href="{{ path('admin_homepage') }}" style="color:#9368E9;">
+                                    <b>Inicio</b>
+                                </a>
+                                <b>/</b>
+                                <a href="{{path('admin_usuario',{'id':'list'})}}" style="color:#9368E9;">
+                                    <b>Usuarios</b>
+                                </a>
+                            </div>
+                            <!--Titulo-->
+                            <h3 class="title" style="margin-top:10px;">
+                                <i class="pe-7s-users"></i>
+                                Editor de usuarios
+                            </h3>
+                            <!--Segun el tipo de accion-->
+                            {% if ((mode=='add') or (mode=='edit')) %}
+                                <div class="row" style="margin-top:15px;">
+                                        <div class="col-md-4" style="margin-bottom:15px;">
+                                            <div class="form-group">
+                                                {% if (mode=='add')  %}
+                                                <form method="post" action="{{path('admin_usuario',{'id':'add'})}}">
+                                                {% elseif (mode=='edit') %}
+                                                <form method="post" action="{{path('admin_usuario',{'id':id})}}">
+                                                {% endif %}
+                                                    <label style="font-size:15px;">
+                                                        <b>Nombre del nuevo usuario:</b>
+                                                    </label>
+                                                    <input type="text" class="form-control" placeholder="Escriba el nombre" name="txt_nombre"  
+                                                        {% if usuarios %} value="{{usuarios.nombre}}" {% endif %}>
+                                                    <br>
+                                                    <label style="font-size:15px;">
+                                                        <b>Apellido del nuevo usuario:</b>
+                                                    </label>
+                                                    <input type="text" class="form-control" placeholder="Escriba el apellido" name="txt_apellido"
+                                                    {% if usuarios %} value="{{usuarios.apellido}}" {% endif %}>
+                                                    <br>
+                                                    <label style="font-size:15px;">
+                                                        <b>Seleccione el tipo de usuario:</b>
+                                                    </label>
+                                                    <select name="txt_tipoUsu" class="form-control">
+                                                        <option value="-1"> - Seleccione -</option>
+                                                        {% for tu in tipoUsuarios %}
+                                                            {% if usuarios and usuarios.tipoUsu==tu.id %} 
+                                                                    <option value="{{tu.id}}" selected>{{tu.descripcion}}</option>
+                                                            {% else %}
+                                                                    <option value="{{tu.id}}">{{tu.descripcion}}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </select>
+                                                    <br>
+                                                    <label style="font-size:15px;">
+                                                        <b>Nick del nuevo usuario:</b>
+                                                    </label>
+                                                    <input type="text" class="form-control" placeholder="Escriba el nick" name="txt_nick"
+                                                    {% if usuarios %} value="{{usuarios.nick}}" {% endif %}>
+                                                    <br>
+                                                    <label style="font-size:15px;">
+                                                        <b>Contraseña del nuevo usuario:</b>
+                                                    </label>
+                                                    <input type="password" class="form-control" placeholder="Escriba el nombre" name="txt_password"
+                                                    {% if usuarios %} value="{{usuarios.password}}" {% endif %}>
+                                                    <br>
+                                                    <label style="font-size:15px;">
+                                                        <b>Seleccione el destino del usuario:</b>
+                                                    </label>
+                                                    <select name="txt_destino" class="form-control">
+                                                        <option value="-1"> - Seleccione -</option>
+                                                        {% for de in destinos %}
+                                                            {% if usuarios and usuarios.destino==de.id %} 
+                                                                    <option value="{{de.id}}" selected>{{de.descripcion}}</option>
+                                                            {% else %}
+                                                                    <option value="{{de.id}}">{{de.descripcion}}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </select>
+                                                    <br>
+                                                    <!--Boton de volver-->
+                                                    <a href="{{ path('admin_usuario',{'id':'list'}) }}" style="color:#9368E9;">
+                                                        <button type="button" class="btn btn-danger btn-fill pull-left" style="margin-right:10px;">
+                                                            <i class="pe-7s-close-circle"></i>&nbsp;Cancelar
+                                                        </button>
+                                                    </a>
+                                                    <!--Boton de Enviar-->                                                    
+                                                    <button type="submit" class="btn btn-success btn-fill pull-left">
+                                                        {% if usuarios %} 
+                                                                   Modificar &rarr;
+                                                        {% else %}
+                                                                   Agregar &rarr;
+                                                        {% endif %}
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <br><br>
+                                </div>
+                            {% endif %}                                                      
+                            <!--LISTAR-->
+                            {% if (mode=='list') %}
+                                <!--Notificaciones-->
+                                <div>
+                                    {% if stat is defined %}
+                                        {% if stat=='ok' %}
+                                        <div class="alert alert-success" style="margin-top:10px;margin-bottom:10px;">
+                                            <span>Operación realizada con <b>Exito!</b></span>
+                                        </div>                                            
+                                        {% endif %}
+                                        {% if stat=='error' %}
+                                        <div class="alert alert-danger" style="margin-top:10px;margin-bottom:10px;">
+                                            <span>Hubo un error al realizar la operación</span>
+                                        </div>                                            
+                                        {% endif %}                                        
+                                    {% endif %}
+                                </div>                            
+                                <!--Barra de acciones-->
+                                <div>
+                                    <a href="{{path('admin_usuario',{'id':'add'})}}">
+                                        <button type="button" class="btn btn-success btn-fill pull-right">
+                                            Agregar Usuario&nbsp;<i class="pe-7s-plus"></i>
+                                        </button>
+                                    </a>
+                                </div><br>
+                                <!--Tabla-->
+                                <div style="margin-top:10px;font-size:17px;padding:20px;">
+                                    <table class="table table-hover">
+                                        <thead>                                        
+                                            <tr>
+                                                <th>Apellido</th>
+                                                <th>Nombre</th>
+                                                <th>TipoUsuario</th>
+                                                <th>Usuario</th>
+                                                <th>Destino</th>
+                                                <th colspan="2">Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for dest in usuarios %}
+                                            <tr>
+                                                <td>{{dest.apellido}}</td>
+                                                <td>{{dest.nombre}}</td>
+                                                <td>{{dest.descripcion}}</td>                                                
+                                                <td>
+                                                    {% if dest.nick!='' %}
+                                                        {{dest.nick}}
+                                                    {% else %}
+                                                        Sin registrar encargado.
+                                                    {% endif %}                                                
+                                                </td>
+                                                <td>{{dest.destino}}</td>
+                                                <th>
+                                                    <a href="{{path('admin_usuario',{'id':dest.id})}}" title="Haga click para editar el usuario">
+                                                        <i class="pe-7s-pen"></i>&nbsp;Editar
+                                                    </a>
+                                                </th>
+                                                <th>
+                                                    <a href="javascript:borrarMsg('{{path('admin_usuario',{'id':'D'~dest.id})}}');" title="Haga click para borrar el usuario" style="color:Red;">
+                                                        <i class="pe-7s-close-circle"></i>&nbsp;Borrar
+                                                    </a>
+                                                </th>
+                                            </tr>
+                                            {% endfor %}                                        
+                                        </tbody>
+                                    </table>
+                                </div>
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+{% endblock %}
